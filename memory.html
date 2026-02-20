@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>משחק זיכרון</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- רקע מונפש -->
+  <div class="bg-elements">
+
+    <!-- שמש עם קרניים -->
+    <div class="bg-sun">
+      <div class="sun-rays"></div>
+      <div class="sun-body"></div>
+    </div>
+
+    <!-- קשת גאומטרית CSS -->
+    <div class="bg-rainbow"></div>
+
+    <!-- עננים CSS -->
+    <div class="bg-cloud" style="top:7%;  animation: cloudLeft  30s linear infinite 0s;">
+      <div class="cloud-shape cloud-lg"></div>
+    </div>
+    <div class="bg-cloud" style="top:21%; animation: cloudLeft  42s linear infinite -17s;">
+      <div class="cloud-shape cloud-sm"></div>
+    </div>
+    <div class="bg-cloud" style="top:14%; animation: cloudRight 36s linear infinite -9s;">
+      <div class="cloud-shape cloud-md"></div>
+    </div>
+
+    <!-- ניצוצות -->
+    <div class="bg-sparkle" style="top:10%; left:13%;  width:12px; height:12px; animation-delay:0s;"></div>
+    <div class="bg-sparkle" style="top:27%; left:7%;   width:8px;  height:8px;  animation-delay:1.1s;"></div>
+    <div class="bg-sparkle" style="top:55%; right:9%;  width:11px; height:11px; animation-delay:0.5s;"></div>
+    <div class="bg-sparkle" style="top:38%; right:5%;  width:7px;  height:7px;  animation-delay:1.8s;"></div>
+    <div class="bg-sparkle" style="top:6%;  left:47%;  width:9px;  height:9px;  animation-delay:2.3s;"></div>
+    <div class="bg-sparkle" style="top:70%; left:22%;  width:8px;  height:8px;  animation-delay:0.9s;"></div>
+
+  </div>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← חזרה לבית</a>
+    <h1 class="game-title">🃏 משחק זיכרון</h1>
+
+    <!-- ===== מסך הגדרות ===== -->
+    <div id="setup-screen" class="setup-screen">
+
+      <h2>איך רוצים לשחק?</h2>
+
+      <!-- בחירת מצב -->
+      <div class="mode-selector section-gap">
+        <button class="mode-btn active" id="emoji-mode-btn" onclick="selectMode('emoji', this)">
+          🎨 אימוג'י
+        </button>
+        <button class="mode-btn" id="photo-mode-btn" onclick="selectMode('photos', this)">
+          📸 תמונות שלנו
+        </button>
+      </div>
+
+      <!-- חלק אימוג'י -->
+      <div id="emoji-section" class="section-gap">
+        <p class="section-label">בחרו קטגוריה:</p>
+        <div class="emoji-categories">
+          <button class="category-btn active" onclick="selectCategory('animals', this)">🐶 חיות</button>
+          <button class="category-btn" onclick="selectCategory('food', this)">🍎 אוכל</button>
+          <button class="category-btn" onclick="selectCategory('transport', this)">🚗 תחבורה</button>
+          <button class="category-btn" onclick="selectCategory('toys', this)">⚽ משחקים</button>
+        </div>
+      </div>
+
+      <!-- חלק תמונות -->
+      <div id="photo-section" class="section-gap hidden">
+        <p class="section-label">בחרו תמונות מהמחשב:</p>
+        <label class="photo-upload-label">
+          📁 בחרו תמונות
+          <input type="file" id="photo-input" multiple accept="image/*"
+                 style="display:none" onchange="handlePhotoUpload(this)">
+        </label>
+        <div class="photo-preview" id="photo-preview"></div>
+        <p class="photo-count" id="photo-count"></p>
+      </div>
+
+      <hr class="divider">
+
+      <!-- רמת קושי -->
+      <div class="section-gap">
+        <p class="section-label">רמת קושי:</p>
+        <div class="difficulty-selector">
+          <button class="mode-btn active" id="easy-btn" onclick="selectDifficulty('easy', this)">
+            😊 קל — 6 זוגות
+          </button>
+          <button class="mode-btn" id="hard-btn" onclick="selectDifficulty('hard', this)">
+            🤔 קשה — 8 זוגות
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="startGame()" style="font-size: 1.3rem; padding: 16px 55px;">
+        🎮 התחל!
+      </button>
+
+    </div>
+
+    <!-- ===== מסך המשחק ===== -->
+    <div id="game-screen" class="game-screen hidden">
+
+      <div class="game-header">
+        <span>מהלכים: <strong id="moves-count">0</strong></span>
+        <span>זוגות: <strong id="pairs-found">0</strong> / <strong id="pairs-total">0</strong></span>
+        <button class="btn btn-accent" onclick="resetToSetup()"
+                style="font-size: 0.95rem; padding: 8px 20px;">
+          🔄 מחדש
+        </button>
+      </div>
+
+      <div class="memory-grid" id="memory-grid"></div>
+
+    </div>
+
+    <!-- ===== מסך ניצחון ===== -->
+    <div id="victory-screen" class="victory-screen hidden">
+      <span class="victory-emoji">🎉</span>
+      <h2>כל הכבוד!</h2>
+      <p>סיימתם ב־<strong id="final-moves">0</strong> מהלכים!</p>
+      <div class="victory-btns">
+        <button class="btn btn-primary" onclick="resetToSetup()">🔄 שחקו שוב</button>
+        <a href="index.html" class="btn btn-secondary">🏠 בית</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="memory.js"></script>
+</body>
+</html>

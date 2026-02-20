@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>משחקי תמונות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- רקע מונפש -->
+  <div class="bg-elements">
+
+    <!-- שמש עם קרניים -->
+    <div class="bg-sun">
+      <div class="sun-rays"></div>
+      <div class="sun-body"></div>
+    </div>
+
+    <!-- קשת גאומטרית CSS -->
+    <div class="bg-rainbow"></div>
+
+    <!-- עננים CSS — גבהים ומהירויות שונים -->
+    <div class="bg-cloud" style="top:7%;  animation: cloudLeft  30s linear infinite 0s;">
+      <div class="cloud-shape cloud-lg"></div>
+    </div>
+    <div class="bg-cloud" style="top:21%; animation: cloudLeft  42s linear infinite -17s;">
+      <div class="cloud-shape cloud-sm"></div>
+    </div>
+    <div class="bg-cloud" style="top:14%; animation: cloudRight 36s linear infinite -9s;">
+      <div class="cloud-shape cloud-md"></div>
+    </div>
+
+    <!-- ניצוצות -->
+    <div class="bg-sparkle" style="top:10%; left:13%;  width:12px; height:12px; animation-delay:0s;"></div>
+    <div class="bg-sparkle" style="top:27%; left:7%;   width:8px;  height:8px;  animation-delay:1.1s;"></div>
+    <div class="bg-sparkle" style="top:55%; right:9%;  width:11px; height:11px; animation-delay:0.5s;"></div>
+    <div class="bg-sparkle" style="top:38%; right:5%;  width:7px;  height:7px;  animation-delay:1.8s;"></div>
+    <div class="bg-sparkle" style="top:6%;  left:47%;  width:9px;  height:9px;  animation-delay:2.3s;"></div>
+    <div class="bg-sparkle" style="top:70%; left:22%;  width:8px;  height:8px;  animation-delay:0.9s;"></div>
+
+  </div>
+
+  <div class="container">
+    <header class="home-header">
+      <h1>🎮 משחקי תמונות</h1>
+      <p class="subtitle">בחרו משחק!</p>
+    </header>
+
+    <div class="games-grid">
+
+      <a href="memory.html" class="game-card">
+        <div class="game-emoji">🃏</div>
+        <h2>זיכרון</h2>
+        <p>הפכו קלפים ומצאו זוגות</p>
+      </a>
+
+      <a href="oddone.html" class="game-card">
+        <div class="game-emoji">🔍</div>
+        <h2>מי שונה?</h2>
+        <p>מצאו מי יוצא דופן</p>
+      </a>
+
+      <a href="matching.html" class="game-card">
+        <div class="game-emoji">🔗</div>
+        <h2>התאמה</h2>
+        <p>חברו זוגות תואמים</p>
+      </a>
+
+    </div>
+  </div>
+</body>
+</html>
