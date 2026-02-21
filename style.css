@@ -964,105 +964,150 @@ a.game-card:hover {
   50%      { box-shadow: var(--shadow), 0 0 0 11px rgba(255, 179, 0, 0.25); }
 }
 
-/* ===== משחק התאמה ===== */
+/* ===== משחק מיון ===== */
 
-.matching-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 55px;           /* הפרדה גדולה בין הטורים */
-  max-width: 620px;
-  margin: 0 auto;
-  position: relative;
+.sort-cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin: 10px 0;
 }
 
-/* קו מפריד אנכי בין שני הטורים */
-.matching-layout::after {
-  content: '';
-  position: absolute;
-  top: 44px;           /* מתחת לתוויות */
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px;
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 2px;
-}
-
-.matching-col-label {
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 5px 14px;
-  border-radius: 20px;
-}
-
-/* תווית שמאל — צבע זהב */
-.label-pick {
+.sort-cat-btn {
+  background: rgba(255,255,255,0.55);
+  border: 3px solid transparent;
+  border-radius: 18px;
+  padding: 14px 22px;
+  font-size: 1.3rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s, background 0.2s;
+  box-shadow: var(--shadow);
   color: #2d3436;
-  background: rgba(255, 230, 109, 0.85);
+  font-weight: bold;
+  line-height: 1.5;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-/* תווית ימין — צבע ירוק-כחול */
-.label-find {
-  color: white;
-  background: rgba(78, 205, 196, 0.55);
-  border: 1px solid rgba(78, 205, 196, 0.6);
+.sort-cat-btn:hover {
+  transform: scale(1.06);
 }
 
-.matching-col {
+.sort-cat-btn.active {
+  border-color: var(--accent);
+  background: rgba(255, 230, 109, 0.7);
+}
+
+/* ===== מסך המשחק — מיון ===== */
+
+.game-screen .game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.sort-arena {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  align-items: center;
+  gap: 30px;
 }
 
-.matching-card {
-  background: white;
-  border-radius: 16px;
+.sort-item-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  width: 130px;
+  height: 130px;
+}
+
+.sort-item {
+  font-size: 5.5rem;
   line-height: 1;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: transform 0.15s, border-color 0.2s, background 0.2s;
-  border: 4px solid transparent;
-  min-height: 82px;
-  overflow: hidden;
+  cursor: grab;
   user-select: none;
+  transition: opacity 0.15s;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.18));
 }
 
-.matching-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.sort-item-clone {
+  cursor: grabbing;
+  transition: none;
 }
 
-.matching-card:hover:not(.matched):not(.flash-wrong) {
-  transform: scale(1.04);
+.sort-item.sort-correct {
+  animation: sortCorrect 0.6s ease forwards;
 }
 
-.matching-card.selected {
-  border-color: var(--accent);
-  background: #fffde7;
-  transform: scale(1.05);
-  box-shadow: 0 6px 22px rgba(255, 230, 109, 0.5);
+.sort-item.sort-wrong {
+  animation: sortWrong 0.45s ease;
 }
 
-.matching-card.matched {
-  border-color: var(--success);
-  background: #f0fff8;
-  cursor: default;
-  animation: correctPop 0.35s ease;
+@keyframes sortCorrect {
+  0%   { transform: scale(1);    opacity: 1; }
+  50%  { transform: scale(1.35); opacity: 0.9; }
+  100% { transform: scale(0);    opacity: 0; }
 }
 
-.matching-card.flash-wrong {
-  animation: flashWrong 0.65s ease;
-  border-color: var(--primary);
+@keyframes sortWrong {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-10px); }
+  40%       { transform: translateX(10px); }
+  60%       { transform: translateX(-8px); }
+  80%       { transform: translateX(8px); }
 }
 
-@keyframes flashWrong {
-  0%, 100% { background: white;   }
-  40%       { background: #ffe0e0; }
+/* ===== קופסאות מיון ===== */
+
+.sort-boxes {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sort-box {
+  background: rgba(255,255,255,0.6);
+  border: 4px solid transparent;
+  border-radius: 22px;
+  padding: 18px 20px;
+  min-width: 110px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.sort-box-icon {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+.sort-box-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.sort-box.box-hover {
+  transform: scale(1.08);
+  background: rgba(255,255,255,0.88);
+}
+
+.sort-box.box-flash {
+  animation: boxFlash 0.6s ease;
+}
+
+@keyframes boxFlash {
+  0%, 100% { background: rgba(255,255,255,0.6); }
+  40%       { background: rgba(100,255,180,0.6); }
 }
