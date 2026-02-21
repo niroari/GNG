@@ -50,6 +50,35 @@
 
       <h2>איך רוצים לשחק?</h2>
 
+      <!-- יחיד / מרובה משתתפים -->
+      <div class="players-mode-selector section-gap">
+        <button class="mode-btn active" onclick="selectGameMode('single', this)">👤 משחק יחיד</button>
+        <button class="mode-btn"        onclick="selectGameMode('multi',  this)">👥 מרובה משתתפים</button>
+      </div>
+
+      <!-- שמות שחקנים -->
+      <div id="players-section" class="section-gap hidden">
+        <p class="section-label">שחקנים:</p>
+        <div id="player-inputs-container">
+          <div class="player-input-row">
+            <span class="player-color-dot" style="background:#FF6B6B;"></span>
+            <button class="player-emoji-btn" onclick="cycleEmoji(this)">🦁</button>
+            <input type="text" class="player-name-input" placeholder="שם שחקן 1" maxlength="12">
+          </div>
+          <div class="player-input-row">
+            <span class="player-color-dot" style="background:#4ECDC4;"></span>
+            <button class="player-emoji-btn" onclick="cycleEmoji(this)">🐯</button>
+            <input type="text" class="player-name-input" placeholder="שם שחקן 2" maxlength="12">
+          </div>
+        </div>
+        <button class="btn btn-accent" id="add-player-btn" onclick="addPlayerInput()"
+                style="font-size:0.9rem; padding:8px 22px; margin-top:10px;">
+          ＋ הוסף שחקן
+        </button>
+      </div>
+
+      <hr class="divider">
+
       <!-- בחירת מצב -->
       <div class="mode-selector section-gap">
         <button class="mode-btn active" id="emoji-mode-btn" onclick="selectMode('emoji', this)">
@@ -121,7 +150,8 @@
     <!-- ===== מסך המשחק ===== -->
     <div id="game-screen" class="game-screen hidden">
 
-      <div class="game-header">
+      <!-- כותרת מצב יחיד -->
+      <div class="game-header" id="game-header-single">
         <span>מהלכים: <strong id="moves-count">0</strong></span>
         <span>זוגות: <strong id="pairs-found">0</strong> / <strong id="pairs-total">0</strong></span>
         <button class="btn btn-accent" onclick="resetToSetup()"
@@ -130,15 +160,37 @@
         </button>
       </div>
 
+      <!-- כותרת מצב רבים -->
+      <div id="game-header-multi" class="hidden">
+        <div class="player-scoreboard" id="player-scoreboard"></div>
+        <div class="turn-banner">
+          <span id="turn-text">תור של: <strong id="current-player-name"></strong></span>
+          <button class="btn btn-accent" onclick="resetToSetup()"
+                  style="font-size: 0.95rem; padding: 8px 20px;">🔄 מחדש</button>
+        </div>
+      </div>
+
       <div class="memory-grid" id="memory-grid"></div>
 
     </div>
 
     <!-- ===== מסך ניצחון ===== -->
     <div id="victory-screen" class="victory-screen hidden">
-      <span class="victory-emoji">🎉</span>
-      <h2>כל הכבוד!</h2>
-      <p>סיימתם ב־<strong id="final-moves">0</strong> מהלכים!</p>
+
+      <!-- מצב יחיד -->
+      <div id="single-victory">
+        <span class="victory-emoji">🎉</span>
+        <h2>כל הכבוד!</h2>
+        <p>סיימתם ב־<strong id="final-moves">0</strong> מהלכים!</p>
+      </div>
+
+      <!-- מצב רבים -->
+      <div id="multi-victory" class="hidden">
+        <span class="victory-emoji" id="winner-emoji">🏆</span>
+        <h2 id="winner-title">כל הכבוד!</h2>
+        <div class="player-results" id="player-results"></div>
+      </div>
+
       <div class="victory-btns">
         <button class="btn btn-primary" onclick="resetToSetup()">🔄 שחקו שוב</button>
         <a href="index.html" class="btn btn-secondary">🏠 בית</a>

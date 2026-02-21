@@ -6,6 +6,11 @@ const emojiSets = {
   toys:      ['⚽','🎈','🎀','🪁','🧸','🎯','🎲','🎮','🏀','🎨','🪆','🎭','🏈','🎪','🎠']
 };
 
+// ===== מרובה משתתפים — קבועים =====
+const playerColors  = ['#FF6B6B', '#4ECDC4', '#6C5CE7', '#e17055'];
+const defaultEmojis = ['🦁', '🐯', '🦊', '🐼'];
+const playerEmojis  = ['🦁','🐯','🦊','🐼','🐸','🦋','🐬','🦄','🐧','🐙','🦕','🤩','⭐','🌈','🚀'];
+
 // ===== צבעי גב קלף =====
 const cardBackColors = {
   red:    'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #FF6B6B 0%, #FF9A9A 100%)',
@@ -21,6 +26,11 @@ let selectedCategory   = 'animals';
 let selectedDifficulty = 'easy';
 let selectedCardColor  = 'red';
 let uploadedPhotos     = [];
+
+// מרובה משתתפים
+let gameMode           = 'single';
+let players            = [];
+let currentPlayerIndex = 0;
 
 let flippedCards  = [];
 let matchedPairs  = 0;
@@ -53,6 +63,37 @@ function selectCardColor(color, btn) {
   selectedCardColor = color;
   document.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+}
+
+function selectGameMode(mode, btn) {
+  gameMode = mode;
+  document.querySelectorAll('.players-mode-selector .mode-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('players-section').classList.toggle('hidden', mode !== 'multi');
+}
+
+function cycleEmoji(btn) {
+  const idx = playerEmojis.indexOf(btn.textContent);
+  btn.textContent = playerEmojis[(idx + 1) % playerEmojis.length];
+}
+
+function addPlayerInput() {
+  const container = document.getElementById('player-inputs-container');
+  const count = container.querySelectorAll('.player-input-row').length;
+  if (count >= 4) return;
+  const idx = count;
+  const row = document.createElement('div');
+  row.className = 'player-input-row';
+  row.innerHTML = `
+    <span class="player-color-dot" style="background:${playerColors[idx]};"></span>
+    <button class="player-emoji-btn" onclick="cycleEmoji(this)">${defaultEmojis[idx]}</button>
+    <input type="text" class="player-name-input" placeholder="שם שחקן ${idx + 1}" maxlength="12">
+  `;
+  container.appendChild(row);
+  if (count + 1 >= 4) {
+    document.getElementById('add-player-btn').classList.add('hidden');
+  }
 }
 
 function selectDifficulty(difficulty, btn) {
@@ -100,6 +141,18 @@ function startGame() {
     return;
   }
 
+  // הגדרת שחקנים במצב רבים
+  if (gameMode === 'multi') {
+    const rows = document.querySelectorAll('.player-input-row');
+    players = Array.from(rows).map((row, i) => ({
+      emoji: row.querySelector('.player-emoji-btn').textContent,
+      name:  row.querySelector('.player-name-input').value.trim() || `שחקן ${i + 1}`,
+      color: playerColors[i],
+      pairs: 0,
+    }));
+    currentPlayerIndex = 0;
+  }
+
   // איפוס מצב
   totalPairs   = pairsCount;
   matchedPairs = 0;
@@ -137,6 +190,15 @@ function startGame() {
     const card = createCard(data, index);
     grid.appendChild(card);
   });
+
+  // הצגת הכותרת הנכונה
+  const isMulti = gameMode === 'multi';
+  document.getElementById('game-header-single').classList.toggle('hidden',  isMulti);
+  document.getElementById('game-header-multi').classList.toggle('hidden', !isMulti);
+  if (isMulti) {
+    buildPlayerScoreboard();
+    updateTurnDisplay();
+  }
 
   // מעבר למסך המשחק
   show('game-screen');
@@ -208,13 +270,35 @@ function checkMatch() {
     card1.classList.add('matched');
     card2.classList.add('matched');
     matchedPairs++;
-    document.getElementById('pairs-found').textContent = matchedPairs;
 
-    flippedCards = [];
-    canFlip = true;
+    if (gameMode === 'multi') {
+      // מסגרת בצבע השחקן שמצא
+      const color = players[currentPlayerIndex].color;
+      card1.querySelector('.card-front-face').style.borderColor = color;
+      card2.querySelector('.card-front-face').style.borderColor = color;
+      // עדכון ניקוד
+      players[currentPlayerIndex].pairs++;
+      updatePlayerScoreboard();
 
-    if (matchedPairs === totalPairs) {
-      setTimeout(showVictory, 650);
+      if (matchedPairs === totalPairs) {
+        flippedCards = [];
+        setTimeout(showVictory, 650);
+      } else {
+        // הודעה: תור נוסף לאותו שחקן
+        const p = players[currentPlayerIndex];
+        showTurnMessage(`🎉 כל הכבוד ${p.emoji}! תור נוסף`, () => {
+          flippedCards = [];
+          canFlip = true;
+        });
+      }
+
+    } else {
+      document.getElementById('pairs-found').textContent = matchedPairs;
+      flippedCards = [];
+      canFlip = true;
+      if (matchedPairs === totalPairs) {
+        setTimeout(showVictory, 650);
+      }
     }
 
   } else {
@@ -224,14 +308,90 @@ function checkMatch() {
       card2.classList.remove('flipped');
       flippedCards = [];
       canFlip = true;
+      // מעבר לשחקן הבא
+      if (gameMode === 'multi') {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        updateTurnDisplay();
+      }
     }, 550);
   }
+}
+
+// ===== פונקציות מרובה משתתפים =====
+
+function buildPlayerScoreboard() {
+  const board = document.getElementById('player-scoreboard');
+  board.innerHTML = '';
+  players.forEach((p, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'player-chip';
+    chip.id = `player-chip-${i}`;
+    chip.innerHTML = `
+      <span class="player-chip-dot" style="background:${p.color};"></span>
+      <span>${p.emoji} ${p.name}</span>
+      <span class="player-chip-score" id="player-score-${i}">0</span>
+    `;
+    board.appendChild(chip);
+  });
+}
+
+function updateTurnDisplay() {
+  const p = players[currentPlayerIndex];
+  document.getElementById('turn-text').innerHTML =
+    `תור של: <strong style="color:${p.color}">${p.emoji} ${p.name}</strong>`;
+  players.forEach((_, i) => {
+    document.getElementById(`player-chip-${i}`)
+      .classList.toggle('active-player', i === currentPlayerIndex);
+  });
+}
+
+function updatePlayerScoreboard() {
+  players.forEach((p, i) => {
+    document.getElementById(`player-score-${i}`).textContent = p.pairs;
+  });
+}
+
+function showTurnMessage(msg, callback) {
+  document.getElementById('turn-text').innerHTML = msg;
+  setTimeout(() => {
+    updateTurnDisplay();
+    if (callback) callback();
+  }, 1300);
 }
 
 // ===== ניצחון =====
 
 function showVictory() {
-  document.getElementById('final-moves').textContent = movesCount;
+  if (gameMode === 'multi') {
+    document.getElementById('single-victory').classList.add('hidden');
+    document.getElementById('multi-victory').classList.remove('hidden');
+
+    const sorted = [...players].sort((a, b) => b.pairs - a.pairs);
+    const isTie  = sorted.length > 1 && sorted[0].pairs === sorted[1].pairs;
+
+    document.getElementById('winner-emoji').textContent = isTie ? '🤝' : '🏆';
+    document.getElementById('winner-title').textContent =
+      isTie ? 'תיקו!' : `${sorted[0].emoji} ${sorted[0].name} ניצח/ה!`;
+
+    const medals = ['🥇', '🥈', '🥉', '🏅'];
+    const resultsDiv = document.getElementById('player-results');
+    resultsDiv.innerHTML = '';
+    sorted.forEach((p, i) => {
+      const row = document.createElement('div');
+      row.className = 'result-row';
+      row.innerHTML = `
+        <span class="result-medal">${medals[i]}</span>
+        <span class="result-name" style="color:${p.color}">${p.emoji} ${p.name}</span>
+        <span class="result-score">${p.pairs} זוגות</span>
+      `;
+      resultsDiv.appendChild(row);
+    });
+
+  } else {
+    document.getElementById('single-victory').classList.remove('hidden');
+    document.getElementById('multi-victory').classList.add('hidden');
+    document.getElementById('final-moves').textContent = movesCount;
+  }
   show('victory-screen');
 }
 
