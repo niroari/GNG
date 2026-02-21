@@ -127,6 +127,9 @@ a.game-card:hover {
   cursor: pointer;
   padding: 0;
   outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-block;
   transition: transform 0.15s, box-shadow 0.2s;
 }
 
