@@ -1111,3 +1111,97 @@ a.game-card:hover {
   0%, 100% { background: rgba(255,255,255,0.6); }
   40%       { background: rgba(100,255,180,0.6); }
 }
+
+/* ===== משחק הפכים ===== */
+
+.opp-prompt {
+  text-align: center;
+  margin: 18px 0 28px;
+}
+
+.opp-prompt-emoji {
+  font-size: 6.5rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
+}
+
+.opp-prompt-word {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.opp-question-label {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.85);
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.opp-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  max-width: 310px;
+  margin: 0 auto;
+}
+
+.opp-choice-btn {
+  background: rgba(255,255,255,0.72);
+  border: 3px solid transparent;
+  border-radius: 20px;
+  padding: 14px 22px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, background 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.opp-choice-btn:hover:not(:disabled) {
+  transform: scale(1.04);
+  background: rgba(255,255,255,0.9);
+}
+
+.choice-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.choice-word {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.opp-choice-btn.correct {
+  background: rgba(100, 220, 150, 0.85);
+  border-color: #27ae60;
+  animation: choiceCorrect 0.4s ease;
+}
+
+.opp-choice-btn.wrong {
+  background: rgba(255, 140, 120, 0.85);
+  border-color: #e74c3c;
+  animation: choiceWrong 0.45s ease;
+}
+
+@keyframes choiceCorrect {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+@keyframes choiceWrong {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-8px); }
+  75%       { transform: translateX(8px); }
+}
