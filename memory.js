@@ -6,10 +6,20 @@ const emojiSets = {
   toys:      ['⚽','🎈','🎀','🪁','🧸','🎯','🎲','🎮','🏀','🎨','🪆','🎭','🏈','🎪','🎠']
 };
 
+// ===== צבעי גב קלף =====
+const cardBackColors = {
+  red:    'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #FF6B6B 0%, #FF9A9A 100%)',
+  blue:   'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #4a90d9 0%, #74b3ef 100%)',
+  green:  'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #27ae60 0%, #55efc4 100%)',
+  purple: 'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #6C5CE7 0%, #a29bfe 100%)',
+  orange: 'radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px), linear-gradient(145deg, #e17055 0%, #fab1a0 100%)',
+};
+
 // ===== מצב המשחק =====
 let selectedMode       = 'emoji';
 let selectedCategory   = 'animals';
 let selectedDifficulty = 'easy';
+let selectedCardColor  = 'red';
 let uploadedPhotos     = [];
 
 let flippedCards  = [];
@@ -36,6 +46,12 @@ function selectMode(mode, btn) {
 function selectCategory(category, btn) {
   selectedCategory = category;
   document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectCardColor(color, btn) {
+  selectedCardColor = color;
+  document.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
@@ -140,6 +156,8 @@ function createCard(data, index) {
   // גב הקלף (מה שרואים כשהוא הפוך)
   const backFace = document.createElement('div');
   backFace.className = 'card-face card-back-face';
+  backFace.style.background     = cardBackColors[selectedCardColor];
+  backFace.style.backgroundSize = '18px 18px, 100% 100%';
 
   // פני הקלף (מה שמגלים)
   const frontFace = document.createElement('div');
