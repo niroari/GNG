@@ -286,7 +286,7 @@ function checkMatch() {
       } else {
         // הודעה: תור נוסף לאותו שחקן
         const p = players[currentPlayerIndex];
-        showTurnMessage(`🎉 כל הכבוד ${p.emoji}! תור נוסף`, () => {
+        showTurnMessage(`🎉 כל הכבוד <span class="turn-emoji">${p.emoji}</span>! תור נוסף`, () => {
           flippedCards = [];
           canFlip = true;
         });
@@ -328,7 +328,8 @@ function buildPlayerScoreboard() {
     chip.id = `player-chip-${i}`;
     chip.innerHTML = `
       <span class="player-chip-dot" style="background:${p.color};"></span>
-      <span>${p.emoji} ${p.name}</span>
+      <span class="chip-emoji">${p.emoji}</span>
+      <span>${p.name}</span>
       <span class="player-chip-score" id="player-score-${i}">0</span>
     `;
     board.appendChild(chip);
@@ -338,7 +339,7 @@ function buildPlayerScoreboard() {
 function updateTurnDisplay() {
   const p = players[currentPlayerIndex];
   document.getElementById('turn-text').innerHTML =
-    `תור של: <strong style="color:${p.color}">${p.emoji} ${p.name}</strong>`;
+    `תור של: <span class="turn-emoji">${p.emoji}</span> <strong style="color:${p.color}">${p.name}</strong>`;
   players.forEach((_, i) => {
     document.getElementById(`player-chip-${i}`)
       .classList.toggle('active-player', i === currentPlayerIndex);
