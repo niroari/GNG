@@ -55,26 +55,45 @@ body {
 /* ===== גריד משחקים ===== */
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .game-card {
-  background: white;
   border-radius: var(--radius);
-  padding: 35px 20px;
+  padding: 38px 20px;
   text-align: center;
   text-decoration: none;
-  color: #2d3436;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s, box-shadow 0.2s;
+  color: white;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
   position: relative;
   overflow: hidden;
+  animation: cardFloat 3.5s ease-in-out infinite;
+}
+
+.game-card:nth-child(1) {
+  background: linear-gradient(145deg, #FF6B6B, #fc8faa);
+  animation-delay: 0s;
+}
+.game-card:nth-child(2) {
+  background: linear-gradient(145deg, #4ECDC4, #44b89c);
+  animation-delay: -0.9s;
+}
+.game-card:nth-child(3) {
+  background: linear-gradient(145deg, #6C5CE7, #a29bfe);
+  animation-delay: -1.8s;
+}
+.game-card:nth-child(4) {
+  background: linear-gradient(145deg, #e17055, #fdcb6e);
+  animation-delay: -2.6s;
 }
 
 a.game-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  animation-play-state: paused;
+  transform: scale(1.07);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.32);
   cursor: pointer;
 }
 
@@ -82,17 +101,28 @@ a.game-card:hover {
   font-size: 4.5rem;
   margin-bottom: 15px;
   display: block;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+a.game-card:hover .game-emoji {
+  transform: scale(1.35) rotate(8deg);
 }
 
 .game-card h2 {
   font-size: 1.6rem;
   margin-bottom: 8px;
-  color: var(--primary);
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
 .game-card p {
-  color: #888;
+  color: rgba(255,255,255,0.88);
   font-size: 1rem;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
 
 .coming-soon {
