@@ -370,9 +370,11 @@ function showVictory() {
     const sorted = [...players].sort((a, b) => b.pairs - a.pairs);
     const isTie  = sorted.length > 1 && sorted[0].pairs === sorted[1].pairs;
 
-    document.getElementById('winner-emoji').textContent = isTie ? '🤝' : '🏆';
+    const winnerEl = document.getElementById('winner-emoji');
+    winnerEl.textContent = isTie ? '🤝' : sorted[0].emoji;
+    winnerEl.classList.toggle('winner-big-emoji', !isTie);
     document.getElementById('winner-title').textContent =
-      isTie ? 'תיקו!' : `${sorted[0].emoji} ${sorted[0].name} ניצח/ה!`;
+      isTie ? 'תיקו!' : `${sorted[0].name} ניצח/ה!`;
 
     const medals = ['🥇', '🥈', '🥉', '🏅'];
     const resultsDiv = document.getElementById('player-results');
