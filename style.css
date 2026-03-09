@@ -625,6 +625,76 @@ a.game-card:hover .game-emoji {
   font-size: 1.05rem;
 }
 
+/* ===== עטיפת לוח + שחקן פעיל ===== */
+.game-board-wrapper {
+  display: flex;
+  flex-direction: row-reverse; /* RTL: גריד מימין, פאנל משמאל */
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ===== פאנל שחקן פעיל (צד הלוח) ===== */
+.active-player-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  padding: 18px 14px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  min-width: 90px;
+  position: sticky;
+  top: 20px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.active-turn-label {
+  font-family: 'Secular One', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.active-player-emoji-big {
+  font-size: 4.5rem;
+  line-height: 1;
+  display: block;
+  animation: playerBounce 1.2s ease-in-out infinite alternate;
+}
+
+.active-player-name-side {
+  font-family: 'Secular One', sans-serif;
+  font-size: 0.95rem;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes playerBounce {
+  from { transform: translateY(0px) scale(1);    }
+  to   { transform: translateY(-8px) scale(1.08); }
+}
+
+@keyframes turnFlash {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.active-player-side.turn-flash {
+  animation: turnFlash 0.4s ease;
+}
+
 /* ===== גריד קלפי זיכרון ===== */
 .memory-grid {
   display: grid;

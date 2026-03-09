@@ -205,6 +205,7 @@ function startGame() {
   const isMulti = gameMode === 'multi';
   document.getElementById('game-header-single').classList.toggle('hidden',  isMulti);
   document.getElementById('game-header-multi').classList.toggle('hidden', !isMulti);
+  document.getElementById('active-player-side').classList.toggle('hidden', !isMulti);
   if (isMulti) {
     buildPlayerScoreboard();
     updateTurnDisplay();
@@ -354,6 +355,18 @@ function updateTurnDisplay() {
     document.getElementById(`player-chip-${i}`)
       .classList.toggle('active-player', i === currentPlayerIndex);
   });
+
+  // עדכון פאנל השחקן הפעיל בצד הלוח
+  const sideEl  = document.getElementById('active-player-side');
+  document.getElementById('active-player-emoji-big').textContent = p.emoji;
+  document.getElementById('active-player-name-side').textContent = p.name;
+  sideEl.style.borderColor = p.color;
+  sideEl.style.boxShadow   = `0 6px 24px rgba(0,0,0,0.15), 0 0 22px ${p.color}66`;
+
+  // אנימציית "תור עבר"
+  sideEl.classList.remove('turn-flash');
+  void sideEl.offsetWidth; // איפוס אנימציה
+  sideEl.classList.add('turn-flash');
 }
 
 function updatePlayerScoreboard() {
