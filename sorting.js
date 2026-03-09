@@ -1,13 +1,76 @@
-// ===== קטגוריות =====
+// ===== Twemoji CDN (SVG) =====
+const TW = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/';
+
+// ===== קטגוריות עם תמונות אמתיות =====
 const sortCategories = {
-  animals:   { label: 'חיות',   icon: '🐾', color: '#FF6B6B',
-               items: ['🐶','🐱','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸'] },
-  food:      { label: 'אוכל',   icon: '🍎', color: '#4ECDC4',
-               items: ['🍎','🍌','🍓','🍕','🍦','🍩','🌮','🍭','🍇','🍒','🥕','🌽'] },
-  transport: { label: 'תחבורה', icon: '🚗', color: '#6C5CE7',
-               items: ['🚗','🚌','🚂','✈️','🚁','🚢','🚲','🛵','🚀','🚜','🚓','🏎️'] },
-  toys:      { label: 'משחקים', icon: '⚽', color: '#e17055',
-               items: ['⚽','🎈','🎀','🪁','🧸','🎯','🎲','🎮','🏀','🎨','🪆','🎭'] },
+  animals: {
+    label: 'חיות', iconSrc: TW + '1f43e.svg', color: '#FF3A5C',
+    items: [
+      { src: TW + '1f436.svg', name: 'כלב' },
+      { src: TW + '1f431.svg', name: 'חתול' },
+      { src: TW + '1f430.svg', name: 'ארנב' },
+      { src: TW + '1f98a.svg', name: 'שועל' },
+      { src: TW + '1f43b.svg', name: 'דב' },
+      { src: TW + '1f43c.svg', name: 'פנדה' },
+      { src: TW + '1f428.svg', name: 'קואלה' },
+      { src: TW + '1f981.svg', name: 'אריה' },
+      { src: TW + '1f42e.svg', name: 'פרה' },
+      { src: TW + '1f437.svg', name: 'חזיר' },
+      { src: TW + '1f438.svg', name: 'צפרדע' },
+      { src: TW + '1f435.svg', name: 'קוף' },
+    ]
+  },
+  food: {
+    label: 'אוכל', iconSrc: TW + '1f34e.svg', color: '#00C48C',
+    items: [
+      { src: TW + '1f34e.svg', name: 'תפוח' },
+      { src: TW + '1f34c.svg', name: 'בננה' },
+      { src: TW + '1f353.svg', name: 'תות' },
+      { src: TW + '1f355.svg', name: 'פיצה' },
+      { src: TW + '1f366.svg', name: 'גלידה' },
+      { src: TW + '1f369.svg', name: 'דונאט' },
+      { src: TW + '1f347.svg', name: 'ענבים' },
+      { src: TW + '1f352.svg', name: 'דובדבן' },
+      { src: TW + '1f955.svg', name: 'גזר' },
+      { src: TW + '1f33d.svg', name: 'תירס' },
+      { src: TW + '1f349.svg', name: 'אבטיח' },
+      { src: TW + '1f34a.svg', name: 'תפוז' },
+    ]
+  },
+  transport: {
+    label: 'תחבורה', iconSrc: TW + '1f697.svg', color: '#5B5EF5',
+    items: [
+      { src: TW + '1f697.svg', name: 'מכונית' },
+      { src: TW + '1f68c.svg', name: 'אוטובוס' },
+      { src: TW + '1f682.svg', name: 'רכבת' },
+      { src: TW + '2708.svg',  name: 'מטוס' },
+      { src: TW + '1f681.svg', name: 'מסוק' },
+      { src: TW + '1f6a2.svg', name: 'ספינה' },
+      { src: TW + '1f6b2.svg', name: 'אופניים' },
+      { src: TW + '1f680.svg', name: 'טיל' },
+      { src: TW + '1f69c.svg', name: 'טרקטור' },
+      { src: TW + '1f693.svg', name: 'ניידת' },
+      { src: TW + '1f6f5.svg', name: 'קטנוע' },
+      { src: TW + '1f3ce.svg', name: 'מרוץ' },
+    ]
+  },
+  toys: {
+    label: 'משחקים', iconSrc: TW + '26bd.svg', color: '#FF9800',
+    items: [
+      { src: TW + '26bd.svg',  name: 'כדורגל' },
+      { src: TW + '1f388.svg', name: 'בלון' },
+      { src: TW + '1f9f8.svg', name: 'דובי' },
+      { src: TW + '1f3af.svg', name: 'מטרה' },
+      { src: TW + '1f3b2.svg', name: 'קוביות' },
+      { src: TW + '1f3ae.svg', name: 'ג\'ויסטיק' },
+      { src: TW + '1f3c0.svg', name: 'כדורסל' },
+      { src: TW + '1f3a8.svg', name: 'ציור' },
+      { src: TW + '1fa86.svg', name: 'בובות' },
+      { src: TW + '1f380.svg', name: 'סרט' },
+      { src: TW + '1fa81.svg', name: 'יו-יו' },
+      { src: TW + '1f3ad.svg', name: 'תיאטרון' },
+    ]
+  },
 };
 
 // ===== מצב הגדרות =====
@@ -50,7 +113,7 @@ function startGame() {
   gameItems = [];
   activeCats.forEach(cat => {
     shuffle([...sortCategories[cat].items]).slice(0, itemsPerCat)
-      .forEach(emoji => gameItems.push({ emoji, category: cat }));
+      .forEach(item => gameItems.push({ ...item, category: cat }));
   });
   gameItems = shuffle(gameItems);
   totalItems       = gameItems.length;
@@ -78,7 +141,7 @@ function buildBoxes() {
     box.dataset.cat  = cat;
     box.style.borderColor = d.color;
     box.innerHTML = `
-      <span class="sort-box-icon">${d.icon}</span>
+      <img src="${d.iconSrc}" class="sort-box-icon-img" alt="${d.label}" draggable="false">
       <span class="sort-box-label">${d.label}</span>
     `;
     el.appendChild(box);
@@ -92,10 +155,14 @@ function showNextItem() {
     setTimeout(showVictory, 400);
     return;
   }
-  const sortItem      = document.getElementById('sort-item');
-  sortItem.textContent = gameItems[currentItemIndex].emoji;
-  sortItem.className   = 'sort-item';
-  canDrag              = true;
+  const item     = gameItems[currentItemIndex];
+  const sortItem = document.getElementById('sort-item');
+  sortItem.innerHTML = `
+    <img src="${item.src}" class="sort-item-img" alt="${item.name}" draggable="false">
+    <span class="sort-item-label">${item.name}</span>
+  `;
+  sortItem.className = 'sort-item';
+  canDrag = true;
 }
 
 // ===== גרירה — אתחול =====
@@ -120,10 +187,10 @@ function onDragStart(e) {
   dragOffsetX = clientX - rect.left;
   dragOffsetY = clientY - rect.top;
 
-  // יצירת עותק צף שעוקב אחר האצבע/עכבר
+  // יצירת עותק צף
   dragClone = document.createElement('div');
-  dragClone.className   = 'sort-item sort-item-clone';
-  dragClone.textContent = sortItem.textContent;
+  dragClone.className = 'sort-item sort-item-clone';
+  dragClone.innerHTML = sortItem.innerHTML; // מעתיק את התמונה והתווית
   dragClone.style.cssText = `
     position: fixed;
     left: ${rect.left}px;
@@ -149,7 +216,6 @@ function onDragMove(e) {
   dragClone.style.left = (clientX - dragOffsetX) + 'px';
   dragClone.style.top  = (clientY - dragOffsetY) + 'px';
 
-  // הדגשת הקופסה שמתחת לעכבר/אצבע
   document.querySelectorAll('.sort-box').forEach(box => {
     const r      = box.getBoundingClientRect();
     const isOver = clientX >= r.left && clientX <= r.right &&
@@ -174,7 +240,6 @@ function onDragEnd(e) {
 
   document.querySelectorAll('.sort-box').forEach(b => b.classList.remove('box-hover'));
 
-  // בדיקה על איזו קופסה שוחרר
   let dropped = false;
   document.querySelectorAll('.sort-box').forEach(box => {
     const r = box.getBoundingClientRect();
@@ -184,15 +249,14 @@ function onDragEnd(e) {
       dropped = true;
     }
   });
-  // אם לא נחת על קופסה — חוזר למקומו (לא עושים כלום, הפריט כבר שם)
 }
 
 // ===== טיפול בשחרור =====
 
 function handleDrop(droppedCat) {
   canDrag = false;
-  const sortItem   = document.getElementById('sort-item');
-  const isCorrect  = gameItems[currentItemIndex].category === droppedCat;
+  const sortItem  = document.getElementById('sort-item');
+  const isCorrect = gameItems[currentItemIndex].category === droppedCat;
 
   if (isCorrect) {
     sortedCount++;
