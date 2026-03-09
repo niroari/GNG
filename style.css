@@ -28,7 +28,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: 'Secular One', 'Segoe UI', Arial, sans-serif;
   background: var(--bg-gradient);
   min-height: 100vh;
   direction: rtl;
@@ -192,20 +192,22 @@ a.game-card:hover .game-emoji {
 }
 
 .player-name-input {
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  padding: 9px 14px;
+  border: 2.5px solid #ddd;
+  border-radius: 12px;
+  padding: 10px 16px;
   font-size: 1rem;
   font-family: inherit;
   width: 180px;
   text-align: center;
   direction: rtl;
-  transition: border-color 0.2s;
+  background: #f8f8ff;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .player-name-input:focus {
   outline: none;
-  border-color: var(--secondary);
+  border-color: #00C48C;
+  box-shadow: 0 0 0 3px rgba(0, 196, 140, 0.15);
 }
 
 /* ===== מרובה משתתפים — מסך המשחק ===== */
@@ -350,84 +352,124 @@ a.game-card:hover .game-emoji {
   padding: 13px 35px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  font-family: inherit;
-  font-weight: bold;
+  font-family: 'Secular One', sans-serif;
+  font-weight: 400;
   display: inline-block;
   text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s;
 }
 
 .btn:hover {
-  transform: scale(1.06);
+  transform: translateY(-3px);
 }
 
 .btn:active {
-  transform: scale(0.96);
+  transform: translateY(2px);
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: linear-gradient(150deg, #FF3A5C, #FF7090);
   color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.45);
+  box-shadow: 0 6px 0 #9e1030, 0 8px 22px rgba(255, 58, 92, 0.4);
+}
+.btn-primary:hover {
+  box-shadow: 0 9px 0 #9e1030, 0 14px 30px rgba(255, 58, 92, 0.45);
+}
+.btn-primary:active {
+  box-shadow: 0 2px 0 #9e1030, 0 3px 10px rgba(255, 58, 92, 0.3);
 }
 
 .btn-secondary {
-  background: var(--secondary);
+  background: linear-gradient(150deg, #00C48C, #56E0B0);
   color: white;
-  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.45);
+  box-shadow: 0 6px 0 #006845, 0 8px 22px rgba(0, 196, 140, 0.4);
+}
+.btn-secondary:hover {
+  box-shadow: 0 9px 0 #006845, 0 14px 30px rgba(0, 196, 140, 0.45);
+}
+.btn-secondary:active {
+  box-shadow: 0 2px 0 #006845, 0 3px 10px rgba(0, 196, 140, 0.3);
 }
 
 .btn-accent {
-  background: var(--accent);
-  color: #2d3436;
-  box-shadow: 0 4px 12px rgba(255, 230, 109, 0.45);
+  background: linear-gradient(150deg, #FF9800, #FFD54F);
+  color: #1a0050;
+  box-shadow: 0 6px 0 #994500, 0 8px 22px rgba(255, 152, 0, 0.4);
+}
+.btn-accent:hover {
+  box-shadow: 0 9px 0 #994500, 0 14px 30px rgba(255, 152, 0, 0.45);
+}
+.btn-accent:active {
+  box-shadow: 0 2px 0 #994500, 0 3px 10px rgba(255, 152, 0, 0.3);
 }
 
 /* ===== כפתור חזרה ===== */
 .back-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.85);
+  color: white;
   text-decoration: none;
-  font-size: 1.1rem;
-  transition: color 0.2s;
+  font-size: 1rem;
+  font-family: 'Secular One', sans-serif;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  padding: 9px 20px;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.38);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: background 0.18s, transform 0.18s;
 }
 
 .back-btn:hover {
-  color: white;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(4px);
 }
 
 /* ===== כותרת משחק ===== */
 .game-title {
   text-align: center;
-  color: white;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-  margin-bottom: 25px;
+  font-family: 'Secular One', sans-serif;
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  color: #FFE600;
+  text-shadow:
+    -2px -2px 0 #1a004a,
+     2px -2px 0 #1a004a,
+    -2px  2px 0 #1a004a,
+     2px  2px 0 #1a004a,
+    -3px  0   0 #1a004a,
+     3px  0   0 #1a004a,
+     5px  6px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 22px;
 }
 
 /* ===== מסך הגדרות ===== */
 .setup-screen {
-  background: white;
-  border-radius: var(--radius);
-  padding: 45px 40px;
-  box-shadow: var(--shadow);
+  background: rgba(255, 255, 255, 0.93);
+  border-radius: 28px;
+  padding: 42px 38px;
+  box-shadow: 0 8px 0 rgba(0, 0, 60, 0.12), 0 20px 55px rgba(0, 0, 80, 0.22);
+  border: 3px solid rgba(255, 255, 255, 0.88);
   text-align: center;
   max-width: 700px;
   margin: 0 auto;
 }
 
 .setup-screen h2 {
-  font-size: 1.8rem;
-  margin-bottom: 30px;
-  color: #2d3436;
+  font-family: 'Secular One', sans-serif;
+  font-size: 1.75rem;
+  margin-bottom: 28px;
+  color: #1a0050;
 }
 
 .section-label {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 12px;
-  font-weight: bold;
+  font-family: 'Secular One', sans-serif;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 13px;
+  font-weight: 400;
 }
 
 /* ===== בחירת מצב ===== */
@@ -439,27 +481,33 @@ a.game-card:hover .game-emoji {
 }
 
 .mode-btn {
-  padding: 18px 28px;
-  border-radius: var(--radius);
-  border: 3px solid #eee;
-  font-size: 1.15rem;
+  padding: 16px 24px;
+  border-radius: 18px;
+  border: 3px solid #e0e0f0;
+  font-size: 1.05rem;
   cursor: pointer;
-  background: #f8f8f8;
-  transition: all 0.2s;
-  font-family: inherit;
+  background: #f8f8ff;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Secular One', sans-serif;
+  font-weight: 400;
   flex: 1;
   max-width: 220px;
+  color: #444;
+  line-height: 1.4;
 }
 
 .mode-btn.active {
-  border-color: var(--primary);
-  background: #fff5f5;
-  color: var(--primary);
+  border-color: #FF3A5C;
+  background: #fff0f3;
+  color: #c0102e;
+  box-shadow: 0 4px 14px rgba(255, 58, 92, 0.2);
+  transform: translateY(-2px);
 }
 
 .mode-btn:hover:not(.active) {
-  border-color: #ccc;
-  background: #f0f0f0;
+  border-color: #bbb;
+  background: #f0f0f8;
+  transform: translateY(-2px);
 }
 
 /* ===== קטגוריות אימוג'י ===== */
@@ -472,24 +520,28 @@ a.game-card:hover .game-emoji {
 }
 
 .category-btn {
-  padding: 10px 22px;
+  padding: 10px 20px;
   border-radius: 50px;
-  border: 2px solid #ddd;
-  font-size: 1rem;
+  border: 2.5px solid #ddd;
+  font-size: 0.95rem;
   cursor: pointer;
   background: white;
-  transition: all 0.2s;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
   font-family: inherit;
+  color: #444;
 }
 
 .category-btn.active {
-  border-color: var(--secondary);
-  background: #f0fffe;
-  color: #00817a;
+  border-color: #00C48C;
+  background: #f0fffb;
+  color: #006845;
+  box-shadow: 0 3px 10px rgba(0, 196, 140, 0.2);
+  transform: translateY(-2px);
 }
 
 .category-btn:hover:not(.active) {
-  border-color: #bbb;
+  border-color: #aaa;
+  transform: translateY(-2px);
 }
 
 /* ===== העלאת תמונות ===== */
@@ -497,19 +549,19 @@ a.game-card:hover .game-emoji {
   display: inline-block;
   padding: 13px 30px;
   border-radius: 50px;
-  background: var(--secondary);
+  background: linear-gradient(150deg, #00C48C, #56E0B0);
   color: white;
-  font-size: 1.1rem;
-  font-family: inherit;
+  font-size: 1.05rem;
+  font-family: 'Secular One', sans-serif;
   cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4);
-  transition: transform 0.15s;
+  box-shadow: 0 6px 0 #006845, 0 8px 22px rgba(0, 196, 140, 0.4);
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s;
   margin-bottom: 15px;
 }
 
 .photo-upload-label:hover {
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #006845, 0 14px 30px rgba(0, 196, 140, 0.45);
 }
 
 .photo-preview {
@@ -557,17 +609,20 @@ a.game-card:hover .game-emoji {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
-  border-radius: 12px;
-  padding: 7px 16px;
-  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px 18px;
+  margin-bottom: 18px;
   color: white;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
+  font-family: 'Secular One', sans-serif;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 50, 0.12);
 }
 
 .game-header strong {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 /* ===== גריד קלפי זיכרון ===== */
@@ -657,11 +712,12 @@ a.game-card:hover .game-emoji {
 
 /* ===== מסך ניצחון ===== */
 .victory-screen {
-  background: white;
-  border-radius: var(--radius);
-  padding: 55px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  padding: 50px 38px;
   text-align: center;
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 0 rgba(0, 0, 60, 0.1), 0 24px 60px rgba(0, 0, 80, 0.22);
+  border: 3px solid rgba(255, 255, 255, 0.9);
   max-width: 500px;
   margin: 0 auto;
 }
@@ -692,15 +748,16 @@ a.game-card:hover .game-emoji {
 }
 
 .victory-screen h2 {
+  font-family: 'Secular One', sans-serif;
   font-size: 2.4rem;
-  color: var(--primary);
+  color: #FF3A5C;
   margin-bottom: 12px;
 }
 
 .victory-screen p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 30px;
+  font-size: 1.15rem;
+  color: #555;
+  margin-bottom: 28px;
 }
 
 .victory-btns {
