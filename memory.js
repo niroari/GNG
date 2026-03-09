@@ -133,7 +133,8 @@ function handlePhotoUpload(input) {
 // ===== התחלת המשחק =====
 
 function startGame() {
-  const pairsCount = selectedDifficulty === 'easy' ? 6 : 8;
+  const pairsMap = { easy: 6, hard: 8, super: 12 };
+  const pairsCount = pairsMap[selectedDifficulty] || 6;
 
   // בדיקה שיש מספיק תמונות
   if (selectedMode === 'photos' && uploadedPhotos.length < pairsCount) {
@@ -184,7 +185,16 @@ function startGame() {
   // בניית גריד הקלפים
   const grid = document.getElementById('memory-grid');
   grid.innerHTML = '';
-  grid.style.gridTemplateColumns = `repeat(4, var(--card-size))`;
+
+  if (pairsCount <= 8) {
+    grid.style.gridTemplateColumns = `repeat(4, var(--card-size))`;
+    document.documentElement.style.setProperty('--card-size', '165px');
+    grid.classList.remove('grid-super');
+  } else {
+    grid.style.gridTemplateColumns = `repeat(6, var(--card-size))`;
+    document.documentElement.style.setProperty('--card-size', '115px');
+    grid.classList.add('grid-super');
+  }
 
   allCards.forEach((data, index) => {
     const card = createCard(data, index);

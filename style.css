@@ -688,6 +688,11 @@ a.game-card:hover .game-emoji {
   overflow: hidden;
 }
 
+/* גריד סופר קשה — אימוג'י קטן יותר לקלפים קטנים */
+.grid-super .card-front-face {
+  font-size: 4rem;
+}
+
 .card-front-face img {
   width: 100%;
   height: 100%;
